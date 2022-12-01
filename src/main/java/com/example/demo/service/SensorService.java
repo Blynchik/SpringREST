@@ -29,4 +29,8 @@ public class SensorService {
         Optional<Sensor> foundSensor = sensorRepository.findById(id);
         return foundSensor.orElseThrow(SensorNotFoundException::new);
     }
+
+    public void save (Sensor sensor){
+        sensorRepository.save(sensor);
+    }
 }
