@@ -17,7 +17,7 @@ public class Sensor {
     private String name;
 
     @Column(name = "rain")
-    private boolean isRainy;
+    private boolean rain;
 
     @Column(name = "temperature")
     private double temperature;
@@ -45,12 +45,12 @@ public class Sensor {
         this.name = name;
     }
 
-    public boolean isRainy() {
-        return isRainy;
+    public boolean getRain() {
+        return rain;
     }
 
-    public void setRainy(boolean rainy) {
-        isRainy = rainy;
+    public void setRain(boolean rain) {
+        this.rain = rain;
     }
 
     public double getTemperature() {
