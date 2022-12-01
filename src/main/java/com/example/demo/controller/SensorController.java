@@ -6,6 +6,7 @@ import com.example.demo.service.SensorService;
 import com.example.demo.util.SensorErrorResponse;
 import com.example.demo.util.SensorNotCreatedException;
 import com.example.demo.util.SensorNotFoundException;
+import com.example.demo.util.SensorValidator;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,11 +26,13 @@ public class SensorController {
 
     private final SensorService sensorService;
     private final ModelMapper modelMapper;
+    private final SensorValidator sensorValidator;
 
     @Autowired
-    public SensorController(SensorService sensorService, ModelMapper modelMapper) {
+    public SensorController(SensorService sensorService, ModelMapper modelMapper, SensorValidator sensorValidator) {
         this.sensorService = sensorService;
         this.modelMapper = modelMapper;
+        this.sensorValidator = sensorValidator;
     }
 
     @GetMapping()
@@ -47,6 +50,8 @@ public class SensorController {
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid SensorDTO sensorDTO,
                                              BindingResult bindingResult) {
+        sensorValidator.validate(sensorDTO,bindingResult);
+
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
 
