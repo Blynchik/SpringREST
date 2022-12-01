@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.List;
 import java.util.Objects;
 
 
@@ -20,10 +21,13 @@ public class Sensor {
     @Size(min = 3, max = 30, message = "Name should be between 3 and 30 characters")
     private String name;
 
-    public Sensor(){
+    @OneToMany(mappedBy = "owner")
+    private List<Measurement> measurements;
+
+    public Sensor() {
     }
 
-    public Sensor(String name){
+    public Sensor(String name) {
         this.name = name;
     }
 
