@@ -5,7 +5,8 @@ URL = f'http://localhost:8080/sensors/{id}'
 r = requests.get(url = URL)
 sensor = r.json()
 
-
-print(f'Сенсор: {sensor["name"]}')
-print(f'Температура: {sensor["temperature"]}')
-print(f'Дождь: {sensor["rain"]}')
+if r.status_code == 404:
+    print(f'Ошибка сервера: {r.json()["message"]}')
+    print(f'Время ошибки: {r.json()["timestamp"]}')
+else:
+    print(f'Сенсор: {sensor["name"]}')

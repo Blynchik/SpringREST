@@ -1,6 +1,8 @@
 package com.example.demo.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -14,13 +16,9 @@ public class Sensor {
     private int id;
 
     @Column(name = "name")
+    @NotEmpty(message = "Name should not be empty")
+    @Size(min = 3, max = 30, message = "Name should be between 3 and 30 characters")
     private String name;
-
-    @Column(name = "rain")
-    private boolean rain;
-
-    @Column(name = "temperature")
-    private double temperature;
 
     public Sensor(){
     }
@@ -45,22 +43,6 @@ public class Sensor {
         this.name = name;
     }
 
-    public boolean getRain() {
-        return rain;
-    }
-
-    public void setRain(boolean rain) {
-        this.rain = rain;
-    }
-
-    public double getTemperature() {
-        return temperature;
-    }
-
-    public void setTemperature(double temperature) {
-        this.temperature = temperature;
-    }
-
     @Override
     public String toString() {
         return "Sensor{" +
@@ -74,7 +56,7 @@ public class Sensor {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Sensor sensor = (Sensor) o;
-        return id == sensor.id && Objects.equals(name, sensor.name);
+        return id == sensor.id && name.equals(sensor.name);
     }
 
     @Override
