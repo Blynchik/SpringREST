@@ -17,20 +17,21 @@ public class SensorService {
     private final SensorRepository sensorRepository;
 
     @Autowired
-    public SensorService(SensorRepository sensorRepository){
+    public SensorService(SensorRepository sensorRepository) {
         this.sensorRepository = sensorRepository;
     }
 
-    public List<Sensor> findAll(){
+    public List<Sensor> findAll() {
         return sensorRepository.findAll();
     }
 
-    public Sensor findOne(int id){
+    public Sensor findOne(int id) {
         Optional<Sensor> foundSensor = sensorRepository.findById(id);
         return foundSensor.orElseThrow(SensorNotFoundException::new);
     }
 
-    public void save (Sensor sensor){
+    @Transactional(readOnly = false)
+    public void save(Sensor sensor) {
         sensorRepository.save(sensor);
     }
 }
