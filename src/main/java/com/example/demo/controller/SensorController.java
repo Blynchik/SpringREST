@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.SensorDTO;
 import com.example.demo.models.Sensor;
 import com.example.demo.service.SensorService;
 import com.example.demo.util.SensorErrorResponse;
 import com.example.demo.util.SensorNotCreatedException;
 import com.example.demo.util.SensorNotFoundException;
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -15,21 +17,26 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/sensors")
 public class SensorController {
 
     private final SensorService sensorService;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public SensorController(SensorService sensorService) {
+    public SensorController(SensorService sensorService, ModelMapper modelMapper) {
         this.sensorService = sensorService;
+        this.modelMapper = modelMapper;
     }
 
     @GetMapping()
-    public List<Sensor> getSensors() {
-        return sensorService.findAll();
+    public List<SensorDTO> getSensors() {
+        return sensorService.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/{id}")
@@ -38,13 +45,13 @@ public class SensorController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<HttpStatus> create (@RequestBody @Valid Sensor sensor,
-                                              BindingResult bindingResult) {
+    public ResponseEntity<HttpStatus> create(@RequestBody @Valid SensorDTO sensorDTO,
+                                             BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
 
             List<FieldError> errors = bindingResult.getFieldErrors();
-            for(FieldError error : errors) {
+            for (FieldError error : errors) {
                 errorMsg.append(error.getField())
                         .append(" - ").append(error.getDefaultMessage())
                         .append(";");
@@ -52,7 +59,7 @@ public class SensorController {
             throw new SensorNotCreatedException(errorMsg.toString());
         }
 
-        sensorService.save(sensor);
+        sensorService.save(convertToSensor(sensorDTO));
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
@@ -62,16 +69,24 @@ public class SensorController {
                 "Sensor with this id wasn't found:",
                 System.currentTimeMillis()
         );
-        return  new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler
-    private ResponseEntity <SensorErrorResponse> handleException(SensorNotCreatedException e){
+    private ResponseEntity<SensorErrorResponse> handleException(SensorNotCreatedException e) {
         SensorErrorResponse response = new SensorErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
         );
 
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
+    private Sensor convertToSensor(SensorDTO sensorDTO) {
+        return modelMapper.map(sensorDTO, Sensor.class);
+    }
+
+    private SensorDTO convertToDTO(Sensor sensor) {
+        return modelMapper.map(sensor, SensorDTO.class);
     }
 }
