@@ -1,4 +1,4 @@
-package com.example.demo.util;
+package com.example.demo.util.sensorUtil;
 
 import com.example.demo.dto.SensorDTO;
 import com.example.demo.models.Sensor;
