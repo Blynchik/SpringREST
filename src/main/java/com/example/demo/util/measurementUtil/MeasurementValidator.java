@@ -5,6 +5,7 @@ import com.example.demo.dto.SensorDTO;
 import com.example.demo.models.Measurement;
 import com.example.demo.models.Sensor;
 import com.example.demo.service.MeasurementService;
+import com.example.demo.service.SensorService;
 import jakarta.persistence.Access;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,10 +16,12 @@ import org.springframework.validation.Validator;
 public class MeasurementValidator implements Validator {
 
     private final MeasurementService measurementService;
+    private final SensorService sensorService;
 
     @Autowired
-    public MeasurementValidator (MeasurementService measurementService){
+    public MeasurementValidator(MeasurementService measurementService, SensorService sensorService) {
         this.measurementService = measurementService;
+        this.sensorService = sensorService;
     }
 
     @Override
@@ -30,5 +33,8 @@ public class MeasurementValidator implements Validator {
     public void validate(Object target, Errors errors) {
         MeasurementDTO measurementDTO = (MeasurementDTO) target;
 
+        if (sensorService.findByName(measurementDTO.getOwner().getName()).isPresent()) {
+            errors.rejectValue("owner", "", "This sensor does not exist");
+        }
     }
 }
