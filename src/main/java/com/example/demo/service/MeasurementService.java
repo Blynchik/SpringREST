@@ -33,7 +33,7 @@ public class MeasurementService {
     }
 
     public Optional<List<Measurement>> findByOwnerName(String name) {
-        Optional<List<Measurement>> foundMeasurements = measurementRepository.findByOwnerName(name);
+        Optional<List<Measurement>> foundMeasurements = measurementRepository.findBySensorName(name);
         return Optional.ofNullable(foundMeasurements.orElseThrow(SensorNotFoundException::new));
     }
 

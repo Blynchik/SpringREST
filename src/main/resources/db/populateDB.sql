@@ -16,13 +16,13 @@ values ('Датчик Antalya');
 insert into sensor (name)
 values ('Датчик Hurghada');
 
-insert into measurement (value, raining, sensor_id)
-values (27.8, false, 2);
-insert into measurement (value, raining, sensor_id)
-values (24.78, true, 5);
-insert into measurement (value, raining, sensor_id)
-values (22.349, false, 3);
-insert into measurement (value, raining, sensor_id)
-values (21.0, true, 1);
-insert into measurement (value, raining, sensor_id)
-values (31, false, 6);
+insert into measurement (value, raining, sensor_id, created_at)
+values (27.8, false, 2, current_timestamp);
+insert into measurement (value, raining, sensor_id, created_at)
+values (24.78, true, 5, current_timestamp);
+insert into measurement (value, raining, sensor_id, created_at)
+values (22.349, false, 3, current_timestamp);
+insert into measurement (value, raining, sensor_id, created_at)
+values (21.0, true, 1, current_timestamp);
+insert into measurement (value, raining, sensor_id, created_at)
+values (31, false, 6, current_timestamp);

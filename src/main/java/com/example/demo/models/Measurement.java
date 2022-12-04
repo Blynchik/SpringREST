@@ -4,7 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
@@ -29,15 +31,19 @@ public class Measurement {
     @ManyToOne
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
     @NotEmpty(message = "Sensor should not be empty")
-    private Sensor owner;
+    private Sensor sensor;
+
+    @Column(name = "created_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt;
 
     public Measurement(){
     }
 
-    public Measurement(double value, boolean raining, Sensor owner){
+    public Measurement(double value, boolean raining, Sensor sensor){
         this.value = value;
         this.raining = raining;
-        this.owner = owner;
+        this.sensor = sensor;
     }
 
     public int getId() {
@@ -64,12 +70,20 @@ public class Measurement {
         this.raining = raining;
     }
 
-    public Sensor getOwner() {
-        return owner;
+    public Sensor getSensor() {
+        return sensor;
     }
 
-    public void setOwner(Sensor owner) {
-        this.owner = owner;
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Date createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override
@@ -77,11 +91,11 @@ public class Measurement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Measurement that = (Measurement) o;
-        return id == that.id && Double.compare(that.value, value) == 0 && raining == that.raining && Objects.equals(owner, that.owner);
+        return id == that.id && Double.compare(that.value, value) == 0 && raining == that.raining && createdAt == that.createdAt && sensor.equals(that.sensor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, value, raining, owner);
+        return Objects.hash(id, value, raining, sensor, createdAt);
     }
 }

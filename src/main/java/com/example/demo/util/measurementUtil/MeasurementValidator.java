@@ -34,7 +34,7 @@ public class MeasurementValidator implements Validator {
         MeasurementDTO measurementDTO = (MeasurementDTO) target;
 
         if (sensorService.findByName(measurementDTO.getOwner().getName()).isPresent()) {
-            errors.rejectValue("owner", "", "This sensor does not exist");
+            errors.rejectValue("sensor", "", "This sensor does not exist");
         }
     }
 }
