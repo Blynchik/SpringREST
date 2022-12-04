@@ -28,6 +28,7 @@ public class Measurement {
 
     @ManyToOne
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
+    @NotEmpty(message = "Sensor should not be empty")
     private Sensor owner;
 
     public Measurement(){
