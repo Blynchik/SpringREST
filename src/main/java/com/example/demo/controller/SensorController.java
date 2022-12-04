@@ -41,11 +41,6 @@ public class SensorController {
                 .collect(Collectors.toList());
     }
 
-    @GetMapping("/{id}")
-    public Sensor getSensor(@PathVariable("id") int id) {
-        return sensorService.findOne(id);
-    }
-
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid SensorDTO sensorDTO,
                                              BindingResult bindingResult) {
