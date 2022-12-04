@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
@@ -44,6 +45,7 @@ public class Measurement {
         this.value = value;
         this.raining = raining;
         this.sensor = sensor;
+        this.createdAt = Date.from(Instant.now());
     }
 
     public int getId() {
