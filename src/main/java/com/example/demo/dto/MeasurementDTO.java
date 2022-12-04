@@ -33,4 +33,28 @@ public class MeasurementDTO {
         this.raining = raining;
         this.owner = owner;
     }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
+    }
+
+    public boolean isRaining() {
+        return raining;
+    }
+
+    public void setRaining(boolean raining) {
+        this.raining = raining;
+    }
+
+    public Sensor getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Sensor owner) {
+        this.owner = owner;
+    }
 }
