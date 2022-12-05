@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.SensorDTO;
 import com.example.demo.models.Sensor;
 import com.example.demo.service.SensorService;
+import com.example.demo.util.ErrorsUtil;
 import com.example.demo.util.sensorUtil.SensorErrorResponse;
 import com.example.demo.util.sensorUtil.SensorNotCreatedException;
 import com.example.demo.util.sensorUtil.SensorNotFoundException;
@@ -42,15 +43,7 @@ public class SensorController {
         sensorValidator.validate(sensorToAdd, bindingResult);
 
         if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append(" - ").append(error.getDefaultMessage())
-                        .append(";");
-            }
-            throw new SensorNotCreatedException(errorMsg.toString());
+            ErrorsUtil.returnErrorsToClient(bindingResult);
         }
 
         sensorService.save(sensorToAdd);
