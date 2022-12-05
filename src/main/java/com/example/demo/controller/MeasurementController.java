@@ -67,6 +67,11 @@ public class MeasurementController {
         return ResponseEntity.ok(HttpStatus.OK);
     }
 
+    @GetMapping("/rainyDaysCount")
+    public Integer rainyDaysCount(){
+        return measurementService.rainyDaysCount();
+    }
+
     @ExceptionHandler
     private ResponseEntity<MeasurementErrorResponse> handleException(MeasurementNotFoundException e) {
         MeasurementErrorResponse response = new MeasurementErrorResponse(

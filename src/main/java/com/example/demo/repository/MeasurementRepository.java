@@ -10,4 +10,5 @@ import java.util.Optional;
 @Repository
 public interface MeasurementRepository extends JpaRepository<Measurement, Integer> {
     Optional<List<Measurement>> findBySensorName(String name);
+    List<Measurement> findByRaining(boolean raining);
 }

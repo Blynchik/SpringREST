@@ -36,9 +36,9 @@ public class MeasurementService {
         return foundMeasurement.orElseThrow(MeasurementNotFoundException::new);
     }
 
-    public Optional<List<Measurement>> findByOwnerName(String name) {
-        Optional<List<Measurement>> foundMeasurements = measurementRepository.findBySensorName(name);
-        return Optional.ofNullable(foundMeasurements.orElseThrow(SensorNotFoundException::new));
+
+    public Integer rainyDaysCount() {
+        return measurementRepository.findByRaining(true).size();
     }
 
     @Transactional(readOnly = false)
