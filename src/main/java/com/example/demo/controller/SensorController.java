@@ -3,8 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.dto.SensorDTO;
 import com.example.demo.models.Sensor;
 import com.example.demo.service.SensorService;
+import com.example.demo.util.EntityErrorResponse;
 import com.example.demo.util.ErrorsUtil;
-import com.example.demo.util.sensorUtil.SensorErrorResponse;
 import com.example.demo.util.sensorUtil.SensorNotCreatedException;
 import com.example.demo.util.sensorUtil.SensorNotFoundException;
 import com.example.demo.util.sensorUtil.SensorValidator;
@@ -14,11 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/sensors")
@@ -51,8 +47,8 @@ public class SensorController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<SensorErrorResponse> handleException(SensorNotFoundException e) {
-        SensorErrorResponse response = new SensorErrorResponse(
+    private ResponseEntity<EntityErrorResponse> handleException(SensorNotFoundException e) {
+        EntityErrorResponse response = new EntityErrorResponse(
                 "Sensor with this id wasn't found:",
                 System.currentTimeMillis()
         );
@@ -60,8 +56,8 @@ public class SensorController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<SensorErrorResponse> handleException(SensorNotCreatedException e) {
-        SensorErrorResponse response = new SensorErrorResponse(
+    private ResponseEntity<EntityErrorResponse> handleException(SensorNotCreatedException e) {
+        EntityErrorResponse response = new EntityErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
         );
