@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -12,13 +13,17 @@ import java.util.Objects;
 @Entity
 @Table(name = "Sensor")
 public class Sensor {
+    //Если связь между таблицами происходит не через первичный
+    //ключ зависимой таблицы (например, поле сенсор связывалось
+    //бы не с id сенсора, а с его именем, то этот класс должен
+    //был бы реализовывать Serializable)
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column(name = "name")
-    @NotNull(message = "Name should not be empty")
+    @NotEmpty(message = "Name should not be empty")
     @Size(min = 3, max = 30, message = "Name should be between 3 and 30 characters")
     private String name;
 
