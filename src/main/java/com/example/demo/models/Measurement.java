@@ -66,6 +66,7 @@ public class Measurement {
     public Boolean isRaining() {
         return raining;
     }
+    //Jackson нормально переводит для boolean-значений
 
     public void setRaining(Boolean raining) {
         this.raining = raining;
