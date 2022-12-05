@@ -1,17 +1,16 @@
 package com.example.demo.models;
 
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.Instant;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table (name = "Measurement")
+@Table(name = "Measurement")
 public class Measurement {
 
     @Id
@@ -20,32 +19,32 @@ public class Measurement {
     private int id;
 
     @Column(name = "value")
-    @NotEmpty(message = "Value should not be empty")
+    @NotNull(message = "Value should not be empty")
     @Min(value = -100, message = "Temperature should be higher than -100")
     @Max(value = 100, message = "Temperature should be lower than 100")
-    private double value;
+    private Double value;
 
     @Column(name = "raining")
-    @NotEmpty(message = "Condition should not be empty")
-    private boolean raining;
+    @NotNull(message = "Condition should not be empty")
+    private Boolean raining;
 
     @ManyToOne
     @JoinColumn(name = "sensor_id", referencedColumnName = "id")
-    @NotEmpty(message = "Sensor should not be empty")
+    @NotNull(message = "Sensor should not be empty")
     private Sensor sensor;
 
     @Column(name = "created_at")
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull
     private Date createdAt;
 
     public Measurement(){
     }
 
-    public Measurement(double value, boolean raining, Sensor sensor){
+    public Measurement(Double value, Boolean raining, Sensor sensor){
         this.value = value;
         this.raining = raining;
         this.sensor = sensor;
-        this.createdAt = Date.from(Instant.now());
     }
 
     public int getId() {
@@ -56,19 +55,19 @@ public class Measurement {
         this.id = id;
     }
 
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public boolean isRaining() {
+    public Boolean isRaining() {
         return raining;
     }
 
-    public void setRaining(boolean raining) {
+    public void setRaining(Boolean raining) {
         this.raining = raining;
     }
 

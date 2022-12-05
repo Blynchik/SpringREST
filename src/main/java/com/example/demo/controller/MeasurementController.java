@@ -1,17 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.MeasurementDTO;
-import com.example.demo.dto.SensorDTO;
 import com.example.demo.models.Measurement;
-import com.example.demo.models.Sensor;
 import com.example.demo.service.MeasurementService;
+import com.example.demo.service.SensorService;
 import com.example.demo.util.measurementUtil.MeasurementErrorResponse;
 import com.example.demo.util.measurementUtil.MeasurementNotCreatedException;
 import com.example.demo.util.measurementUtil.MeasurementNotFoundException;
 import com.example.demo.util.measurementUtil.MeasurementValidator;
-import com.example.demo.util.sensorUtil.SensorErrorResponse;
-import com.example.demo.util.sensorUtil.SensorNotCreatedException;
-import com.example.demo.util.sensorUtil.SensorNotFoundException;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,7 +47,9 @@ public class MeasurementController {
     @PostMapping("/add")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid MeasurementDTO measurementDTO,
                                              BindingResult bindingResult) {
-        measurementValidator.validate(measurementDTO,bindingResult);
+        Measurement measurementToAdd = convertToMeasurement(measurementDTO);
+
+        measurementValidator.validate(measurementToAdd,bindingResult);
 
         if (bindingResult.hasErrors()) {
             StringBuilder errorMsg = new StringBuilder();
@@ -65,7 +63,7 @@ public class MeasurementController {
             throw new MeasurementNotCreatedException(errorMsg.toString());
         }
 
-        measurementService.save(convertToMeasurement(measurementDTO));
+        measurementService.save(measurementToAdd);
         return ResponseEntity.ok(HttpStatus.OK);
     }
 

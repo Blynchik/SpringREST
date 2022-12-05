@@ -1,60 +1,45 @@
 package com.example.demo.dto;
 
-import com.example.demo.models.Sensor;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 public class MeasurementDTO {
-
-    @Column(name = "value")
-    @NotEmpty(message = "Value should not be empty")
+    @NotNull(message = "Value should not be empty")
     @Min(value = -100, message = "Temperature should be higher than -100")
     @Max(value = 100, message = "Temperature should be lower than 100")
-    private double value;
+    private Double value;
 
-    @Column(name = "raining")
-    @NotEmpty(message = "Condition should not be empty")
-    private boolean raining;
+    @NotNull(message = "Condition should not be empty")
+    private Boolean raining;
 
-    @ManyToOne
-    @JoinColumn(name = "sensor_id", referencedColumnName = "id")
-    @NotEmpty(message = "Sensor should not be empty")
-    private Sensor owner;
+    @NotNull(message = "Sensor should not be empty")
+    private SensorDTO sensor;
 
-    public MeasurementDTO(){
-    }
 
-    public MeasurementDTO(double value, boolean raining, Sensor owner){
-        this.value = value;
-        this.raining = raining;
-        this.owner = owner;
-    }
-
-    public double getValue() {
+    public Double getValue() {
         return value;
     }
 
-    public void setValue(double value) {
+    public void setValue(Double value) {
         this.value = value;
     }
 
-    public boolean isRaining() {
+    public Boolean isRaining() {
         return raining;
     }
 
-    public void setRaining(boolean raining) {
+    public void setRaining(Boolean raining) {
         this.raining = raining;
     }
 
-    public Sensor getOwner() {
-        return owner;
+    public SensorDTO getSensor() {
+        return sensor;
     }
 
-    public void setOwner(Sensor owner) {
-        this.owner = owner;
+    public void setSensor(SensorDTO sensor) {
+        this.sensor = sensor;
     }
+
 }
