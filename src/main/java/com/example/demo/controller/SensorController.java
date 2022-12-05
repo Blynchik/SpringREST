@@ -34,13 +34,6 @@ public class SensorController {
         this.sensorValidator = sensorValidator;
     }
 
-    @GetMapping()
-    public List<SensorDTO> getSensors() {
-        return sensorService.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
-
     @PostMapping("/registration")
     public ResponseEntity<HttpStatus> create(@RequestBody @Valid SensorDTO sensorDTO,
                                              BindingResult bindingResult) {
@@ -85,9 +78,5 @@ public class SensorController {
 
     private Sensor convertToSensor(SensorDTO sensorDTO) {
         return modelMapper.map(sensorDTO, Sensor.class);
-    }
-
-    private SensorDTO convertToDTO(Sensor sensor) {
-        return modelMapper.map(sensor, SensorDTO.class);
     }
 }

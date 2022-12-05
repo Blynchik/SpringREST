@@ -21,15 +21,6 @@ public class SensorService {
         this.sensorRepository = sensorRepository;
     }
 
-    public List<Sensor> findAll() {
-        return sensorRepository.findAll();
-    }
-
-    public Sensor findOne(int id) {
-        Optional<Sensor> foundSensor = sensorRepository.findById(id);
-        return foundSensor.orElseThrow(SensorNotFoundException::new);
-    }
-
     public Optional<Sensor> findByName(String name) {
         return sensorRepository.findByName(name);
     }
