@@ -1,4 +1,4 @@
-package com.example.demo.util.measurementUtil;
+package com.example.demo.util;
 
 import com.example.demo.models.Measurement;
 import com.example.demo.service.MeasurementService;

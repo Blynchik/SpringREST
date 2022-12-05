@@ -1,4 +1,4 @@
-package com.example.demo.util.sensorUtil;
+package com.example.demo.util;
 
 import com.example.demo.models.Sensor;
 import com.example.demo.service.SensorService;

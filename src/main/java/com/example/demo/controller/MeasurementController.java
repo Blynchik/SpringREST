@@ -3,11 +3,10 @@ package com.example.demo.controller;
 import com.example.demo.dto.MeasurementDTO;
 import com.example.demo.models.Measurement;
 import com.example.demo.service.MeasurementService;
-import com.example.demo.service.SensorService;
-import com.example.demo.util.measurementUtil.MeasurementErrorResponse;
-import com.example.demo.util.measurementUtil.MeasurementNotCreatedException;
-import com.example.demo.util.measurementUtil.MeasurementNotFoundException;
-import com.example.demo.util.measurementUtil.MeasurementValidator;
+import com.example.demo.util.EntityErrorResponse;
+import com.example.demo.util.EntityException;
+import com.example.demo.util.ErrorsUtil;
+import com.example.demo.util.MeasurementValidator;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,15 +51,7 @@ public class MeasurementController {
         measurementValidator.validate(measurementToAdd,bindingResult);
 
         if (bindingResult.hasErrors()) {
-            StringBuilder errorMsg = new StringBuilder();
-
-            List<FieldError> errors = bindingResult.getFieldErrors();
-            for (FieldError error : errors) {
-                errorMsg.append(error.getField())
-                        .append(" - ").append(error.getDefaultMessage())
-                        .append(";");
-            }
-            throw new MeasurementNotCreatedException(errorMsg.toString());
+            ErrorsUtil.returnErrorsToClient(bindingResult);
         }
 
         measurementService.save(measurementToAdd);
@@ -73,17 +64,8 @@ public class MeasurementController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<MeasurementErrorResponse> handleException(MeasurementNotFoundException e) {
-        MeasurementErrorResponse response = new MeasurementErrorResponse(
-                "Sensor with this id wasn't found:",
-                System.currentTimeMillis()
-        );
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<MeasurementErrorResponse> handleException(MeasurementNotCreatedException e) {
-        MeasurementErrorResponse response = new MeasurementErrorResponse(
+    private ResponseEntity<EntityErrorResponse> handleException(EntityException e) {
+        EntityErrorResponse response = new EntityErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
         );

@@ -4,10 +4,9 @@ import com.example.demo.dto.SensorDTO;
 import com.example.demo.models.Sensor;
 import com.example.demo.service.SensorService;
 import com.example.demo.util.EntityErrorResponse;
+import com.example.demo.util.EntityException;
 import com.example.demo.util.ErrorsUtil;
-import com.example.demo.util.sensorUtil.SensorNotCreatedException;
-import com.example.demo.util.sensorUtil.SensorNotFoundException;
-import com.example.demo.util.sensorUtil.SensorValidator;
+import com.example.demo.util.SensorValidator;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,16 +46,7 @@ public class SensorController {
     }
 
     @ExceptionHandler
-    private ResponseEntity<EntityErrorResponse> handleException(SensorNotFoundException e) {
-        EntityErrorResponse response = new EntityErrorResponse(
-                "Sensor with this id wasn't found:",
-                System.currentTimeMillis()
-        );
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler
-    private ResponseEntity<EntityErrorResponse> handleException(SensorNotCreatedException e) {
+    private ResponseEntity<EntityErrorResponse> handleException(EntityException e) {
         EntityErrorResponse response = new EntityErrorResponse(
                 e.getMessage(),
                 System.currentTimeMillis()
