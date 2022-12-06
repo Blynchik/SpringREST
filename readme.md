@@ -58,6 +58,8 @@ REST API приложение - с помощью класса RestTemplate.
 перейти ко второй части задания и реализовать клиента.
 
 ## Часть 2
+https://github.com/Blynchik/ClientREST/tree/master/src/main/java/org/example
+
 Используйте класс RestTemplate, чтобы отправить 1000 запросов со
 случайными температурами и "дождями" на адрес:
 
