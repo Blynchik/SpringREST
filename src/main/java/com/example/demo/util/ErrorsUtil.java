@@ -1,6 +1,5 @@
 package com.example.demo.util;
 
-import com.example.demo.util.sensorUtil.SensorNotCreatedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
