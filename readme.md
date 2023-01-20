@@ -76,3 +76,5 @@ https://github.com/Blynchik/ClientREST/tree/master/src/main/java/org/example
 Задание со * (необязательное):
 Постройте график температур, получив 1000 температур с сервера.
 Для построения графика можно использовать библиотеку xchart
+
+### Стэк: Spring Boot
